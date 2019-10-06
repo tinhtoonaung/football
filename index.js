@@ -116,7 +116,7 @@ requestify.post('https://graph.facebook.com/v4.0/me/messages?access_token='+PAT,
         "buttons":[
           {
             "type": "web_url",
-            "url": "google.com",
+            "url": "https://football-project-e6829.firebaseapp.com/",
             "title": "Register",
             "webview_height_ratio": "tall"
           }
