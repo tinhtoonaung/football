@@ -19,6 +19,7 @@
   "homepage": "https://github.com/tinhtoonaung/football#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "ejs": "^2.7.4",
     "express": "^4.17.1",
     "firebase-admin": "^8.8.0",
     "requestify": "^0.2.5"
