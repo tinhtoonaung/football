@@ -257,10 +257,6 @@ app.post('/webhook', (req, res) => {
                                         "type":"postback",
                                         "title":"Apply 📋",
                                         "payload":`Apply ${teamDetails.data().name}`
-                                    },{
-                                        "type": "web_url",
-                                        "url": //coming soon,
-                                        "title": "View Stats 🧐",
                                     }]
                             }
                             dbTeams.push(a)
@@ -294,11 +290,12 @@ app.post('/webhook', (req, res) => {
                                         "type":"postback",
                                         "title":"Challenge ⚽️",
                                         "payload":`Challenge ${teamDetails.data().name}`
-                                    },{
-                                        "type": "web_url",
-                                        "url": //coming soon,
-                                        "title": "View Stats 🧐",
-                                    }]
+                                    }//,{
+                                        //"type": "web_url",
+                                        //"url": //coming soon,
+                                      //  "title": "View Stats 🧐",
+                                    //}
+                                    ]
                             }
                             dbTeams.push(a)
                         }
@@ -350,10 +347,6 @@ app.post('/webhook', (req, res) => {
                                         "type":"postback",
                                         "title":"Pick Field ✅",
                                         "payload":`ChooseField ${notiId} ${locationDetails.data().name} ${locationDetails.data().address} ${challengerName}`
-                                    },{
-                                        "type": "web_url",
-                                        "url": //coming soon,
-                                        "title": "View Location 🧐",
                                     }]
                                 }
                                 locations.push(a)
