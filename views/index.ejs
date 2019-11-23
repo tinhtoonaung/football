@@ -1,0 +1,136 @@
+<html>
+	<body background="images/FF.jpg" style="background-size: cover;">
+	<head>
+		<title>Football Match Organizing - Register</title>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.all.min.js"></script>
+		<script src ="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-auth.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-firestore.js"></script>
+	</head>
+	<body style="color: #fff;">
+		<div style="width: 70%; margin-top: 80px; margin-left: auto; margin-right: auto; background-color: rgba(106,106,106, 0.9); border-radius: 35px;">
+			<table style="margin: auto; padding-top: 50px; padding-bottom: 50px;">
+			<form>
+				<tr>
+					<td colspan="2"><h1 style="text-align: center;">Registration</h1></td>
+				</tr>
+				<tr>
+					<td style="text-align: right; padding: 10px;">Name:</td>
+					<td ><input type="text" name="playerName" id="playerName"></td>
+				</tr>
+				<tr>
+					<td style="text-align: right; padding: 10px">Phone:</td>
+					<td><input type="number" name="playerPhone" id="playerPhone"></td>
+				</tr>
+				<tr>
+					<td style="text-align: right; padding: 10px">Age:</td>
+					<td><input type="number" name="playerAge" id="playerAge"></td>
+				</tr>
+				<tr>
+					<td style="text-align: right; padding: 10px">Height:</td>
+					<td><input type="text" name="playerHeight" id="playerHeight"></td>
+				</tr>
+				<tr>
+					<td style="text-align: right; padding: 10px">Weight:</td>
+					<td><input type="text" name="playerWeight" id="playerWeight"></td>
+				</tr>
+				<tr>
+					<td style="text-align: right; padding: 10px">Position:</td>
+					<td><div style="color: red; float: left;"><input type="radio" name="playerPos" value="Forward" id="playerPos"> <b>FW</b>  </div><div style="color: lightgreen; float: left;"><input type="radio" name="playerPos" value="Midfield" id="playerPos"> <b>MF</b>  </div><div style="color: blue; float: left;"><input type="radio" name="playerPos" value="Defender" id="playerPos"> <b>CB</b>  </div><div style="color: orange; float: left;"><input type="radio" name="playerPos" value="Goalkeeper" id="playerPos"> <b>GK</b></div></td>
+				</tr>
+				<tr>
+					<td style="text-align: right; padding: 10px">Dorminant Foot:</td>
+					<td><input type="radio" name="playerFoot" value="Left" id="playerFoot"> Left  <input type="radio" name="playerFoot" value="Right" id="playerFoot"> Right  <input type="radio" name="playerFoot" value="Both" id="playerFoot"> Both</td>
+				</tr>
+				<tr>
+					<td colspan="2" style="text-align: center; height: 150px;"><input type="button" value="Register" onclick="register()" style="border:none; border-style: none; border-radius: 35px; background-color: orange; height: 60px; width: 60%; margin-top: 40px;"></td>
+				</tr>
+			</form>
+			</table>
+		</div>
+	</body>
+	<script>
+		const serviceAccount = {
+			"type": "service_account",
+			"projectId": "football-project-e6829",
+			"private_key_id": "3dc6aa45c981d829bd6d2295e7fb9d3b4d697440",
+			"private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC1U56sPqtxEAi8\nQSTXUsITc7qYvbyGmIx5L/djFvDHJkJ9CvvPOuv3sKXWjdh1FmRyye5JE5bDq0bC\n0PsVIch4BtdUDzuKTMKEIyzojBwW7TTk6mnUJBg/ZXIHPZ1zRpdfksc1uEY9EWCF\ng+sM/QlWKNKMuXW+plFK0tfH+rdx6GWHkP7qz3Wz6RXPVZee67pftIRcZBlzDkCz\ng08wz44DaJ8/TAExlNyPYmTU3c4uYNBb308zaLtgBUc9/E33VBd3uaobZFDUGx/m\nOrPNA+YeN3R47xuMRoamRzcvvT8PJgobd01LavGG7BwF4DZv7xRftgEJJqJWjPcl\nv/3Uc2azAgMBAAECggEACe/YsLjIfWwzBloNkk1DPHypm6g+NiQTAqspxADkVg2X\nNDIPZaZlew/vrqfcVmJRQ+ckC1Yq+3Md8BwyvlA5I7bAQyeIjEYznLkuw1m2Sl1a\nejcMcKc/uu2sx4/NWp1iO0cYaq28D6mtn/OARJhzVAjtrO+W78k+iDqwv5FST0gk\n73lRD1PYB6FfQCDbP8R4uRVAf3JNkuTvaDyS9ktV9rUOnQuEgCjGctXZ9k2K8K7W\nM07MOiXwQD2fnCOLXDU6r3TK/hmrqf47phKu5F0jZrwBIhuBJ/ieCd2ezwIyhAAK\nxF1mfajIlUvnGU3/w0TPy4FzoEcuWhmapbGTEIESDQKBgQDicdZmGTREikYulZOC\n0ZK90jeT1M5mqBhEvJp84KKtEdquAI4kBTPde/yU5NQqCBTntCe/TFWYvQ4kkp9g\nEQ6X/hJLsqApJuIG2kVglmz5MazZXgU5RtJakS4J3QneetvAFCo0It0Q+r+n/JZ7\nZ8bPRozUsDpurjO+Ebl4m+BufwKBgQDM/kKPXS2cMMVyU82aA7fTEG4bkXidbjnI\n/MqVvC2Sthsfv2RDMn1AQL7j66dUXzGCEuLBRHl/7bX2B5+KO59IL0+XgvxEyFop\nT+9pTndLTpfNUEGlSyL7+FNmX36zNrI7LGPh4IG+CujRCodGis6hqujerAxW678Q\nSQGDLxWVzQKBgErFXA4KdH/NSK9JJJQlr1aOe1uNATpUdu77d+eUJSMQqiyaclTi\nguW3cweXJ5dZY82+ZwF7qyfsBSd+YrHN8AuwEUp9iPUNqcSpfg8OnJ0MEg8URJVN\nFVhiZ9lJ62BTIQyjm+vrNyPMKEzH0sic08DNguMX7bNuQheYsq1oiwrxAoGBAI4W\nhyg8G8sxewp9z/s7LIWd09REBuiIaIFJx1n2b1hL5Y0h6msxaePJfQcaZody3Cwe\nzxHLVrQ3nnKEYi88mHE+adrJLfa3MNeF0pqZitKmDU6AnJ/n7r3cKGLDOl0aQnwF\njs4YAZYqlamftJhOyl8AyhzeAEeXbH3rPKMjVcDZAoGBAM1v4cqOcsiJJW0p9gdO\n6XWKSm4alJ2JnyNKnVLZ26NRezR/pvarrHZpE/zyZnYaCq3+hNt5DO6JmZjt3LRC\nnKiKzbx/7MHBfHCC+TSY77dK/fepRoDuoDV9oZ+/G3gkPBCzDNitcqwcMwPE71W2\naNfQ52wVs7OK5omr1y1A5f86\n-----END PRIVATE KEY-----\n",
+			"client_email": "football-project-e6829@appspot.gserviceaccount.com",
+			"client_id": "113742160940448332286",
+			"auth_uri": "https://accounts.google.com/o/oauth2/auth",
+			"token_uri": "https://oauth2.googleapis.com/token",
+			"auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+			"client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/football-project-e6829%40appspot.gserviceaccount.com"
+		}
+
+		firebase.initializeApp(serviceAccount);
+		const db = firebase.firestore();
+
+		function toast(){
+			const Toast = Swal.mixin({
+			  toast: true,
+			  position: 'top-end',
+			  showConfirmButton: false,
+			  timer: 3000
+			})
+
+			Toast.fire({
+			  type: 'success',
+			  title: 'Signed in successfully'
+			})
+		}
+		function register(){
+			var pName = document.getElementById("playerName").value
+			var pPhone = document.getElementById("playerPhone").value
+			var pAge = document.getElementById("playerAge").value
+			var pHeight = document.getElementById("playerHeight").value
+			var pWeight = document.getElementById("playerWeight").value
+			var pPos = document.getElementById("playerPos").value
+			var pFoot = document.getElementById("playerFoot").value
+			db.collection('Players').doc(`${pName}`).set({
+				Name: `${pName}`,
+				Phone: `${pPhone}`,
+				Age: `${pAge}`,
+				Height: `${pHeight}`,
+				Weight: `${pWeight}`,
+				Position: `${pPos}`,
+				Foot: `${pFoot}`,
+				MessengerId: `<%= msgnrID %>`,
+				Team: 'None'
+			}).then(success=>{
+				toast()
+				const Url='https://graph.facebook.com/v5.0/me/messages?access_token=EAAHX10M1JFwBACLhrcMds7SbLGQCD7Fi5zfkMdNJZABTr3RZCZBeZBsSl0JLHlrOdTSQDjBc6UNRxYkpyoPaBZC7hPQrZBOZCx55QuformoZBbgQo55Xtsi2zYZBRAp9Eyna6qO45z30UgMXGn4W8QSLGQaQPR5q4gAu5RoiSggkbggZDZD';
+
+			    const data = {
+			        "recipient":{
+			        "id":'<%= msgnrID %>'
+			        },
+			        "message":{
+			        "text":"✔️ Registration Successful ✔️ \nChoose Type",
+			        "quick_replies":[
+			            {
+			              "content_type":"text",
+			              "title":"Team 🛡",
+			              "payload":"Team"
+			            },{
+			              "content_type":"text",
+			              "title":"Find Match ⚽️",
+			              "payload":"Match"
+			            }
+			        ]
+			        }
+			        }
+		        fetch(Url, {
+		            method: 'POST',
+		            headers: {
+		              'Content-Type': 'application/json'
+		            },
+		            body: JSON.stringify(data)
+		        })
+			})
+		}
+		
+			
+		
+	</script>
+</html>
