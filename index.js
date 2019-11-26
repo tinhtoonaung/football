@@ -180,8 +180,8 @@ app.post('/webhook', (req, res) => {
                 if (webhook_event.message.attachments) {
                     var userPictureInput = webhook_event.message.attachments;
                 }
-                if (webhook_event.message.quick_replies) {
-                    var userInput = webhook_event.message.quick_replies.payload;
+                if (webhook_event.message.quick_reply) {
+                    var userInput = webhook_event.message.quick_reply.payload;
                 }
             }
 
@@ -242,6 +242,9 @@ app.post('/webhook', (req, res) => {
                         }
                     })
                 })
+            }
+            if (userInput == 'CreateTeam') {
+
             }
             if (userInput == 'JoinTeam') {
                 var dbTeams = []
