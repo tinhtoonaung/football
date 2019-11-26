@@ -31,10 +31,6 @@
 					<td><input type="text" name="playerHeight" id="playerHeight"></td>
 				</tr>
 				<tr>
-					<td style="text-align: right; padding: 10px">Weight:</td>
-					<td><input type="text" name="playerWeight" id="playerWeight"></td>
-				</tr>
-				<tr>
 					<td style="text-align: right; padding: 10px">Position:</td>
 					<td><div style="color: red; float: left;"><input type="radio" name="playerPos" value="Forward" id="playerPos"> <b>FW</b>  </div><div style="color: lightgreen; float: left;"><input type="radio" name="playerPos" value="Midfield" id="playerPos"> <b>MF</b>  </div><div style="color: blue; float: left;"><input type="radio" name="playerPos" value="Defender" id="playerPos"> <b>CB</b>  </div><div style="color: orange; float: left;"><input type="radio" name="playerPos" value="Goalkeeper" id="playerPos"> <b>GK</b></div></td>
 				</tr>
@@ -84,7 +80,6 @@
 			var pPhone = document.getElementById("playerPhone").value
 			var pAge = document.getElementById("playerAge").value
 			var pHeight = document.getElementById("playerHeight").value
-			var pWeight = document.getElementById("playerWeight").value
 			var pPos = document.getElementById("playerPos").value
 			var pFoot = document.getElementById("playerFoot").value
 			db.collection('Players').doc(`${pName}`).set({
@@ -92,7 +87,6 @@
 				Phone: `${pPhone}`,
 				Age: `${pAge}`,
 				Height: `${pHeight}`,
-				Weight: `${pWeight}`,
 				Position: `${pPos}`,
 				Foot: `${pFoot}`,
 				MessengerId: `<%= msgnrID %>`,

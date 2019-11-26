@@ -41,7 +41,7 @@ function quickReply(senderId, Text, quickReply) {
     requestify.post('https://graph.facebook.com/v5.0/me/messages?access_token=' + PAT,
         {
             "recipient": {
-                "id": snederId
+                "id": senderId
             },
             "messaging_type": "RESPONSE",
             "message": {
@@ -60,7 +60,7 @@ function textMessage(senderId, Text) {
     requestify.post('https://graph.facebook.com/v5.0/me/messages?access_token=' + PAT,
         {
             "recipient": {
-                "id": snederId
+                "id": senderId
             },
             "messaging_type": "RESPONSE",
             "message": {
