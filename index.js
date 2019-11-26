@@ -243,9 +243,6 @@ app.post('/webhook', (req, res) => {
                     })
                 })
             }
-            if (userInput == 'CreateTeam') {
-
-            }
             if (userInput == 'JoinTeam') {
                 var dbTeams = []
                 db.collection('Team').get().then(teamList => {
@@ -265,6 +262,17 @@ app.post('/webhook', (req, res) => {
                         }
                     })
                     carouselMessage(senderID,dbTeams)
+                })
+            }
+            if (userInput.includes('Apply')) {
+                var userInputArray.split(' ')
+                var teamName = userInputArray[1]
+                db.collection('Team').doc(`${teamName}`).get().then(data=>{
+                	db.collection('Players').where('MessengerId','==', senderID).get().then(relt=>{
+                		relt.forEach(snap=>{
+                			textMessage(`${data.data().adminID}`, `${snap.data().Name} would like to join your team. Here are the details: age ${snap.data().Age} height ${snap.data().Height} position ${snap.data().Position} foot ${snap.data().Foot}`)
+                		})
+                	})
                 })
             }
             if (userInput == 'Match') {
@@ -301,8 +309,8 @@ app.post('/webhook', (req, res) => {
                             }
                             dbTeams.push(a)
                         }
-                    })
                     carouselMessage(senderID,dbTeams)
+                    })
                 })
             }
             if (userInput.includes('Challenge')){
@@ -338,23 +346,20 @@ app.post('/webhook', (req, res) => {
                 var TeamName = userInputArray[1]
                 var challengerName = userInputArray[2]
                 var notiId = userInputArray[3]
-                var locations = []
-                db.collection("Location").get().then(locationList => {
-                    locationList.forEach(locationDetails => {
-                        var a = {
-                                    "title": `${locationDetails.data().name}`,
-                                    "image_url": `${locationDetails.data().image}`,
-                                    "subtitle": `Rating: ${locationDetails.data().address}`,
-                                    "buttons": [{
-                                        "type":"postback",
-                                        "title":"Pick Field ✅",
-                                        "payload":`ChooseField ${notiId} ${locationDetails.data().name} ${locationDetails.data().address} ${challengerName}`
-                                    }]
-                                }
-                                locations.push(a)
+                var date = new Date()
+                var today = `${(date.getDate())+1} ${(date.getMonth())+1} ${(date.getYear())}`
+                db.collection("Team").where('adminID','==',`${notiId}`).get().then(teamList => {
+                    teamList.forEach(teamDetails => {
+                        db.collection('Match').doc().set({
+                            date: today,
+                            team1: teamDetails.data().name,
+                            team2: userInputArray[4],
+                            location: fName
+                        })
                     })
-                    carouselMessage(senderID,locations)
                 })
+                textMessage(notiId, `Match Confirmed!`)
+                textMessage(senderID, `Match Confirmed`)
             }
             if (userInput.includes('ChooseField')){
                 var userInputArray = userInput.split(' ')
