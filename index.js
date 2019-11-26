@@ -187,7 +187,9 @@ app.post('/webhook', (req, res) => {
 
             //Welcome Message
             if (userInput == 'Hi') {
-                requestify.get('https://graph.facebook.com/' + senderID + '?fields=first_name,last_name,profile_pic&access_token=' + PAT)
+                db.collection('Players').where('MessengerId','==',`${senderID}`).get().then(data=>{
+                	if (data.empty){
+                		requestify.get('https://graph.facebook.com/' + senderID + '?fields=first_name,last_name,profile_pic&access_token=' + PAT)
                     .then(function (fbprofile) {
                         var fbdetails = []
                         var fbprofilejson = JSON.parse(fbprofile.body);
@@ -222,6 +224,21 @@ app.post('/webhook', (req, res) => {
                                 console.log('Welcome Fail:', error);
                             });
                     })
+                }else{
+                	var payload = [
+			            {
+			              "content_type":"text",
+			              "title":"Team 🛡",
+			              "payload":"Team"
+			            },{
+			              "content_type":"text",
+			              "title":"Find Match ⚽️",
+			              "payload":"Match"
+			            }
+			        ]
+                            quickReply(senderID, 'What would you like to do?', payload)
+                }
+                })
             }
             if (userInput == 'Team') {
                 db.collection('Players').where('MessengerId', '==', `${senderID}`).get().then(playerList => {
