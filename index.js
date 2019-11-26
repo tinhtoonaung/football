@@ -265,7 +265,7 @@ app.post('/webhook', (req, res) => {
                 })
             }
             if (userInput.includes('Apply')) {
-                var userInputArray.split(' ')
+                var userInputArray = userInput.split(' ')
                 var teamName = userInputArray[1]
                 db.collection('Team').doc(`${teamName}`).get().then(data=>{
                 	db.collection('Players').where('MessengerId','==', senderID).get().then(relt=>{
@@ -285,7 +285,7 @@ app.post('/webhook', (req, res) => {
                                 "title": "Solo 😎",
                                 "payload": "MatchSolo"
                             }]
-                            quickReply(senderID, 'Do you wish to create or join?', payload)
+                            quickReply(senderID, 'Team or solo?', payload)
             }
             if (userInput == 'MatchTeam') {
                 var dbTeams = []
