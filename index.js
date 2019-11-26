@@ -172,16 +172,13 @@ app.post('/webhook', (req, res) => {
             var senderID = webhook_event.sender.id;
             if (webhook_event.postback) {
                 var userInput = webhook_event.postback.payload;
-                console.log('reply', userPostBack);
             }
             if (webhook_event.message) {
                 if (webhook_event.message.text) {
                     var userInput = webhook_event.message.text;
-                    console.log('userText', userInput);
                 }
                 if (webhook_event.message.attachments) {
                     var userPictureInput = webhook_event.message.attachments;
-                    console.log('userImage', userPictureInput);
                 }
                 if (webhook_event.message.quick_replies) {
                     var userInput = webhook_event.message.quick_replies.payload;
